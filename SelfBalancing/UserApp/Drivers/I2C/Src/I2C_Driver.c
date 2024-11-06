@@ -55,18 +55,18 @@ void I2Cdrv_Init(void)
   GPIO_PinModeSet(I2C_SDA_PIN_PORT,
                   I2C_SDA_PIN_NUM,
                   gpioModeWiredAndPullUpFilter, 1);
-  GPIO_PinModeSet(I2C_SDA_PIN_PORT,
-                  I2C_SDA_PIN_NUM,
+  GPIO_PinModeSet(I2C_SCL_PIN_PORT,
+                  I2C_SCL_PIN_NUM,
                   gpioModeWiredAndPullUpFilter, 1);
 
 
   // Route I2C pins to GPIO
   GPIO->I2CROUTE[0].SDAROUTE = (GPIO->I2CROUTE[0].SDAROUTE & ~_GPIO_I2C_SDAROUTE_MASK)
-                        | (gpioPortA << _GPIO_I2C_SDAROUTE_PORT_SHIFT
-                        | (5 << _GPIO_I2C_SDAROUTE_PIN_SHIFT));
+                            | (I2C_SDA_PIN_PORT << _GPIO_I2C_SDAROUTE_PORT_SHIFT
+                                | (I2C_SDA_PIN_NUM << _GPIO_I2C_SDAROUTE_PIN_SHIFT));
   GPIO->I2CROUTE[0].SCLROUTE = (GPIO->I2CROUTE[0].SCLROUTE & ~_GPIO_I2C_SCLROUTE_MASK)
-                        | (gpioPortA << _GPIO_I2C_SCLROUTE_PORT_SHIFT
-                        | (6 << _GPIO_I2C_SCLROUTE_PIN_SHIFT));
+                            | (I2C_SCL_PIN_PORT << _GPIO_I2C_SCLROUTE_PORT_SHIFT
+                                | (I2C_SCL_PIN_NUM << _GPIO_I2C_SCLROUTE_PIN_SHIFT));
   GPIO->I2CROUTE[0].ROUTEEN = GPIO_I2C_ROUTEEN_SDAPEN | GPIO_I2C_ROUTEEN_SCLPEN;
 
 
@@ -78,7 +78,31 @@ void I2Cdrv_Init(void)
 
   // Enable automatic STOP on NACK
   I2C0->CTRL = I2C_CTRL_AUTOSN;
+}
 
+
+
+void I2Cdrv_ReadBlocking(uint16_t followerAddress, uint8_t targetAddress, uint8_t *rxBuff, uint8_t numBytes)
+{
+  // Transfer structure
+  I2C_TransferSeq_TypeDef i2cTransfer;
+  I2C_TransferReturn_TypeDef result;
+
+  // Initialize I2C transfer
+  i2cTransfer.addr          = followerAddress;
+  i2cTransfer.flags         = I2C_FLAG_WRITE_READ; // must write target address before reading
+  i2cTransfer.buf[0].data   = &targetAddress;
+  i2cTransfer.buf[0].len    = 1;
+  i2cTransfer.buf[1].data   = rxBuff;
+  i2cTransfer.buf[1].len    = numBytes;
+
+  result = I2C_TransferInit(I2C0, &i2cTransfer);
+
+  // Send data
+  while (result == i2cTransferInProgress)
+    {
+      result = I2C_Transfer(I2C0);
+    }
 }
 /***************************************************************************//**
  * App ticking function.

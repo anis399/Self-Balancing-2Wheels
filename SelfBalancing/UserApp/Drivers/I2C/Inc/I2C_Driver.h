@@ -51,11 +51,11 @@
 /*******************************************************************************
  * Defines
  ******************************************************************************/
-#define I2C_SDA_PIN_NUM   5
-#define I2C_SDA_PIN_PORT  gpioPortA
+#define I2C_SDA_PIN_NUM   3
+#define I2C_SDA_PIN_PORT  gpioPortB
 
-#define I2C_SCL_PIN_NUM   6
-#define I2C_SCL_PIN_PORT  gpioPortA
+#define I2C_SCL_PIN_NUM   4
+#define I2C_SCL_PIN_PORT  gpioPortB
 
 
 /*******************************************************************************
@@ -76,7 +76,8 @@ typedef struct
  ******************************************************************************/
 void I2Cdrv_Init(void);
 
-//void I2Cdrv_Blocking
+void I2Cdrv_ReadBlocking(uint16_t followerAddress, uint8_t targetAddress, uint8_t *rxBuff, uint8_t numBytes);
+
 
 /***************************************************************************//**
  * App ticking function.
