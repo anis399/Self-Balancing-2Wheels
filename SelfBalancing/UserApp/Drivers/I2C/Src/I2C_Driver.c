@@ -81,7 +81,17 @@ void I2Cdrv_Init(void)
 }
 
 
-
+/*******************************************************************************
+ * Function name:
+ *
+ * Description  : Read 8-bit from register
+ * Parameters   :
+ * Returns      :
+ *
+ * Known issues :
+ * Note         :
+ * TODO         : check null dereferencing
+ ******************************************************************************/
 void I2Cdrv_ReadBlocking(uint16_t followerAddress, uint8_t targetAddress, uint8_t *rxBuff, uint8_t numBytes)
 {
   // Transfer structure
@@ -104,6 +114,48 @@ void I2Cdrv_ReadBlocking(uint16_t followerAddress, uint8_t targetAddress, uint8_
       result = I2C_Transfer(I2C0);
     }
 }
+
+
+/*******************************************************************************
+ * Function name:
+ *
+ * Description  : Read 8-bit from register
+ * Parameters   :
+ * Returns      :
+ *
+ * Known issues :
+ * Note         :
+ * TODO         : check null dereferencing
+ ******************************************************************************/
+void I2Cdrv_WriteBlocking(uint16_t slaveAddress, uint8_t regAddress, uint8_t value)
+{
+
+  // Transfer structure
+  I2C_TransferSeq_TypeDef i2cTransfer;
+  I2C_TransferReturn_TypeDef result;
+
+  uint8_t write[2] = {regAddress, value};
+  uint8_t read[2] = {9, 9};
+  // Initialize I2C transfer
+  i2cTransfer.addr          = slaveAddress;
+  i2cTransfer.flags         = I2C_FLAG_WRITE; // must write target address before reading
+  i2cTransfer.buf[0].data   = write;
+  i2cTransfer.buf[0].len    = 2;
+  i2cTransfer.buf[1].data   = read;
+  i2cTransfer.buf[1].len    = 1;
+
+  result = I2C_TransferInit(I2C0, &i2cTransfer);
+
+  // Send data
+  while (result == i2cTransferInProgress)
+    {
+      result = I2C_Transfer(I2C0);
+    }
+
+}
+
+
+
 /***************************************************************************//**
  * App ticking function.
  ******************************************************************************/

@@ -30,6 +30,7 @@
  *  @todo  :
  *
  * For more information, please refer to the <a href="https://example.com/my_document.pdf">documentation</a>.
+ *                                                    "https://github.com/SiliconLabs/peripheral_examples/blob/master/series1/i2c/i2c/src/main_efr.c"
 *******************************************************************************/
 /******************************************************************************
  * Multiple include protection
@@ -40,6 +41,7 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#include "stdint.h"
 #include "em_cmu.h"
 #include "em_gpio.h"
 #include "em_i2c.h"
@@ -77,6 +79,7 @@ typedef struct
 void I2Cdrv_Init(void);
 
 void I2Cdrv_ReadBlocking(uint16_t followerAddress, uint8_t targetAddress, uint8_t *rxBuff, uint8_t numBytes);
+void I2Cdrv_WriteBlocking(uint16_t slaveAddress, uint8_t regAddress, uint8_t value);
 
 
 /***************************************************************************//**
