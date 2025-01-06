@@ -27,6 +27,7 @@ component:
 - {id: emlib_i2c}
 - {id: sl_system}
 - {id: device_init}
+- {id: emlib_timer}
 - {id: brd4314a}
 define:
 - {name: DEBUG_EFM}
