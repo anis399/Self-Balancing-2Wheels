@@ -33,6 +33,7 @@
 
 //bool begin(GyroScale scale = GyroScale::MPU6050_SCALE_2000DPS, AccelScale range = AccelScale::MPU6050_RANGE_2G, int mpua = MPU6050_ADDRESS);
 bool MPU6050_IMU_begin(GyroScale scale, AccelScale range, int mpu_address);
+void MPU6050_IMU_reset(void);
 RawData MPU6050_IMU_readRawAccel(void);
 
 bool MPU6050_IMU_setClockSource(ClockSource source);
@@ -49,8 +50,10 @@ void MPU6050_IMU_setSleepEnabled(bool state);
 
 
 uint8_t readRegister8(uint8_t reg);
+bool readRegisterBit(uint8_t reg, uint8_t pos);
 void readMultipleRegisters(uint8_t reg, uint8_t * retBuf, uint8_t size);
 void writeRegister8(uint8_t reg, uint8_t value);
+void writeRegisterBit(uint8_t reg, uint8_t pos, bool state);
 
 
 

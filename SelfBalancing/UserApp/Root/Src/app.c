@@ -46,10 +46,6 @@ void app_init(void)
 
   MPU6050_IMU_begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G, MPU6050_ADDRESS);
 
-//  I2Cdrv_ReadBlocking(0x68,0x75,data,1);//anis
-//  I2Cdrv_ReadBlocking(0x68<<1,0x75,data,1); //this is how the address should be used
-//  I2Cdrv_ReadBlocking(0x68>>1,0x75,data,1);//
-//  I2Cdrv_ReadBlocking(0x68,0x75,data,1);
 }
 
 /***************************************************************************//**
@@ -58,5 +54,8 @@ void app_init(void)
 void app_process_action(void)
 {
   MPU6050_IMU_readRawAccel();
+
+  for(int x = 0; x < 0xFFF; x++)
+    __NOP();
 
 }

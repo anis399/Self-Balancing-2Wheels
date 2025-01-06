@@ -76,9 +76,9 @@
 //    return (fastRegister8(MPU6050_REG_WHO_AM_I) == mpuAddress);
 //}
 //
-
 //
-
+//
+//
 //
 //void setDHPFMode(HighPassFilter dhpf) {
 //    uint8_t value;
@@ -98,8 +98,8 @@
 //    writeRegister8(MPU6050_REG_CONFIG, value);
 //}
 //
-
-
+//
+//
 //
 //bool getSleepEnabled() {
 //    return readRegisterBit(MPU6050_REG_PWR_MGMT_1, 6);
@@ -245,7 +245,7 @@
 //    return a;
 //}
 //
-
+//
 //
 //ScaledData readNormalizeAccel() {
 //    readRawAccel();
@@ -607,12 +607,5 @@
 //    Wire.endTransmission();
 //}
 //
-//// Read register bit
-//bool readRegisterBit(uint8_t reg, uint8_t pos) {
-//    uint8_t value;
 //
-//    value = readRegister8(reg);
-//    return ((value >> pos) & 1);
-//}
 //
-

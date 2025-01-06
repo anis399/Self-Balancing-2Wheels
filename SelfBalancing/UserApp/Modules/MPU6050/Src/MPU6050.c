@@ -20,7 +20,9 @@
  ******************************************************************************/
 
 VectorData tg, dg, th;      // Threshold and Delta for Gyro
-RawData rawAcc, rawGyro;             // Raw vectors
+RawData rawAcc, rawGyro;         // Raw vectors (not converted to gvalues)
+ScaledData normalizedAcc, ng;          // Normalized vectors
+ProcessedData proccessedAcc;
 
 bool useCalibrate;
 
@@ -76,8 +78,10 @@ bool MPU6050_IMU_begin(GyroScale scale, AccelScale range, int mpu_address)
       return false;
     }
 
+  MPU6050_IMU_reset();
+
   // Set Clock Source
-  retRes &= MPU6050_IMU_setClockSource(MPU6050_CLOCK_PLL_XGYRO);
+  retRes &= MPU6050_IMU_setClockSource(MPU6050_CLOCK_INTERNAL_8MHZ);
 
 
   // Set Scale & Range
@@ -117,9 +121,17 @@ RawData MPU6050_IMU_readRawAccel(void)
   rawAcc.rx = (int16_t)(xoutHighAcc << 8 | xoutLowAcc);
   rawAcc.ry = (int16_t)(youtHighAcc << 8 | youtLowAcc);
   rawAcc.rz = (int16_t)(zoutHighAcc << 8 | zoutLowAcc);
-//  ra.timeStamp = micros();
 
-  return rawAcc;
+  normalizedAcc.sx = rawAcc.rx * rangePerDigit;
+  normalizedAcc.sy = rawAcc.ry * rangePerDigit;
+  normalizedAcc.sz = rawAcc.rz * rangePerDigit ;
+
+  proccessedAcc.px = (float)rawAcc.rx * rangePerDigit * 9.80665f;
+  proccessedAcc.py = (float)rawAcc.ry * rangePerDigit * 9.80665f;
+  proccessedAcc.pz = (float)rawAcc.rz * rangePerDigit * 9.80665f;
+  //  ra.timeStamp = micros();
+
+   return rawAcc;
 }
 
 /*******************************************************************************
@@ -340,6 +352,47 @@ bool MPU6050_IMU_getSleepEnabled(void)
 }
 
 
+/*******************************************************************************
+ * Function name:
+ *
+ * Description  :
+ * Parameters   :
+ * Returns      :
+ *
+ * Known issues :
+ * Note         :
+ * TODO         : check null dereferencing
+ ******************************************************************************/
+void MPU6050_IMU_reset(void)
+{
+
+  writeRegister8(MPU6050_REG_PWR_MGMT_1, 0x80);
+  do
+    {
+      for(int x = 0; x < 0xFFF; x++)
+        __NOP();
+
+    }while(readRegisterBit(MPU6050_REG_PWR_MGMT_1, 7) == true);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -364,6 +417,25 @@ uint8_t readRegister8(uint8_t reg)
 /*******************************************************************************
  * Function name:
  *
+ * Description  : Read register bit
+ * Parameters   :
+ * Returns      :
+ *
+ * Known issues :
+ * Note         :
+ * TODO         : check null dereferencing
+ ******************************************************************************/
+bool readRegisterBit(uint8_t reg, uint8_t pos)
+{
+  uint8_t value;
+
+  value = readRegister8(reg);
+  return ((value >> pos) & 1);
+}
+
+/*******************************************************************************
+ * Function name:
+ *
  * Description  : Read 8-bit from register
  * Parameters   :
  * Returns      :
@@ -374,8 +446,8 @@ uint8_t readRegister8(uint8_t reg)
  ******************************************************************************/
 void readMultipleRegisters(uint8_t reg, uint8_t * retBuf, uint8_t size)
 {
-  uint8_t value = 0;
-  I2Cdrv_ReadBlocking(mpuAddress, reg, &retBuf, size); //this is how the address should be used
+  //  uint8_t value = 0;
+  I2Cdrv_ReadBlocking(mpuAddress, reg, retBuf, size); //this is how the address should be used
 }
 
 

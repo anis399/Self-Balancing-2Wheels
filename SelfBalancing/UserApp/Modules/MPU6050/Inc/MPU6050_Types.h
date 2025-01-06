@@ -125,6 +125,14 @@ typedef struct
 
 typedef struct
 {
+  float px;
+  float py;
+  float pz;
+  uint32_t timeStamp;
+}ProcessedData;
+
+typedef struct
+{
   int16_t gx;
   int16_t gy;
   int16_t gz;
