@@ -24,6 +24,7 @@ sdk: {id: gecko_sdk, version: 4.2.3}
 toolchain_settings: []
 component:
 - {id: BGM220PC22HNA}
+- {id: emlib_i2c}
 - {id: sl_system}
 - {id: device_init}
 - {id: brd4314a}
