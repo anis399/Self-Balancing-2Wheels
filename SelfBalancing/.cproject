@@ -69,6 +69,10 @@
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.290811691" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/UserApp/Root/Inc}&quot;"/>
+<<<<<<< HEAD
+=======
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/UserApp/Modules/MPU6050/Inc}&quot;"/>
+>>>>>>> 65d4db0f60d5b6ff2ba1061f4a833f1995ac5e01
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/UserApp/Drivers/I2C/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/autogen}&quot;"/>
@@ -276,4 +280,15 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+<<<<<<< HEAD
+=======
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="GNU ARM v10.3.1 - Release">
+			<resource resourceType="PROJECT" workspacePath="/SelfBalancing"/>
+		</configuration>
+		<configuration configurationName="GNU ARM v10.3.1 - Debug">
+			<resource resourceType="PROJECT" workspacePath="/SelfBalancing"/>
+		</configuration>
+	</storageModule>
+>>>>>>> 65d4db0f60d5b6ff2ba1061f4a833f1995ac5e01
 </cproject>

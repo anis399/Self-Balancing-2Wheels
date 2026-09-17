@@ -30,6 +30,10 @@
  *  @todo  :
  *
  * For more information, please refer to the <a href="https://example.com/my_document.pdf">documentation</a>.
+<<<<<<< HEAD
+=======
+ *                                                    "https://github.com/SiliconLabs/peripheral_examples/blob/master/series1/i2c/i2c/src/main_efr.c"
+>>>>>>> 65d4db0f60d5b6ff2ba1061f4a833f1995ac5e01
 *******************************************************************************/
 /******************************************************************************
  * Multiple include protection
@@ -40,6 +44,11 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+<<<<<<< HEAD
+=======
+#include "stdint.h"
+#include "em_cmu.h"
+>>>>>>> 65d4db0f60d5b6ff2ba1061f4a833f1995ac5e01
 #include "em_gpio.h"
 #include "em_i2c.h"
 
@@ -50,11 +59,19 @@
 /*******************************************************************************
  * Defines
  ******************************************************************************/
+<<<<<<< HEAD
 #define I2C_SDA_PIN_NUM   5
 #define I2C_SDA_PIN_PORT  gpioPortA
 
 #define I2C_SCL_PIN_NUM   6
 #define I2C_SCL_PIN_PORT  gpioPortA
+=======
+#define I2C_SDA_PIN_NUM   3
+#define I2C_SDA_PIN_PORT  gpioPortB
+
+#define I2C_SCL_PIN_NUM   4
+#define I2C_SCL_PIN_PORT  gpioPortB
+>>>>>>> 65d4db0f60d5b6ff2ba1061f4a833f1995ac5e01
 
 
 /*******************************************************************************
@@ -75,7 +92,13 @@ typedef struct
  ******************************************************************************/
 void I2Cdrv_Init(void);
 
+<<<<<<< HEAD
 void I2Cdrv_Blocking
+=======
+void I2Cdrv_ReadBlocking(uint16_t followerAddress, uint8_t targetAddress, uint8_t *rxBuff, uint8_t numBytes);
+void I2Cdrv_WriteBlocking(uint16_t slaveAddress, uint8_t regAddress, uint8_t value);
+
+>>>>>>> 65d4db0f60d5b6ff2ba1061f4a833f1995ac5e01
 
 /***************************************************************************//**
  * App ticking function.
